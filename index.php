@@ -17,6 +17,7 @@ function getOrgs() {
     var req = new XMLHttpRequest(); 
     debugger; 
     req.open("GET", "https://disco.crm.dynamics.com/api/discovery/v8.0/Instances"); 
+    req.withCredentials= true;
     //req.setRequestHeader("Accept", "application/json"); 
     //req.setRequestHeader("Content-Type", "application/json; charset=utf-8"); 
     //req.setRequestHeader("OData-MaxVersion", "4.0"); 
