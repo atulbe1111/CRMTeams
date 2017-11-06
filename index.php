@@ -1,43 +1,43 @@
-<!DOCTYPE html>
 <html>
 <body>
+<form>
+  <input type="radio" name="maptype" value="bing" onclick="onClick()"> Bing Maps<br>
+  <input type="radio" name="maptype" value="google" onclick="onClick()"> Google Maps
+</form> 
 
-<p>Click the button to trigger a function that will output "Hello World" in a p element with id="demo".</p>
+<script src="https://statics.teams.microsoft.com/sdk/v1.0/js/MicrosoftTeams.min.js"></script>
 
-<button onclick="getOrgs()">Click me</button>
+<script type="text/javascript">  
 
-<p id="demo"></p>
+microsoftTeams.initialize();
+microsoftTeams.settings.registerOnSaveHandler(function(saveEvent){
 
-<script>
-function myFunction() {
-    document.getElementById("demo").innerHTML = "Hello World";
+    var radios = document.getElementsByName("maptype");
+    if (radios[0].checked) {
+       microsoftTeams.settings.setSettings({
+         entityId: "bing",
+         contentUrl: "https://www.bing.com/maps/embed",
+         suggestedDisplayName: "Bing Map",
+         websiteUrl: "https://www.bing.com/maps",
+         removeUrl: "https://teams-get-started-sample.azurewebsites.net/tabremove.html",
+      });
+    } else {
+       microsoftTeams.settings.setSettings({
+         entityId: "google",
+         contentUrl: "https://www.google.com/maps/embed",
+         suggestedDisplayName: "Google Map",
+         websiteUrl: "https://www.google.com/maps",
+         removeUrl: "https://teams-get-started-sample.azurewebsites.net/tabremove.html",
+      });
+    }
+
+    saveEvent.notifySuccess();
+});
+
+function onClick() {
+    microsoftTeams.settings.setValidityState(true);
 }
-function getOrgs() { 
 
-    var req = new XMLHttpRequest(); 
-    debugger; 
-    req.open("GET", "https://disco.crm.dynamics.com/api/discovery/v8.0/Instances"); 
-    req.withCredentials= true;
-    //req.setRequestHeader("Accept", "application/json"); 
-    //req.setRequestHeader("Content-Type", "application/json; charset=utf-8"); 
-    //req.setRequestHeader("OData-MaxVersion", "4.0"); 
-   // req.setRequestHeader("OData-Version", "4.0"); 
-    req.onreadystatechange = function () { 
-        if (this.readyState == 4 /* complete */) { 
-            req.onreadystatechange = null; 
-            if (this.status == 200) { 
-                var discovery = JSON.parse(this.response); 
-                alert("User Id : " + discovery.Url); 
-            } 
-            else { 
-                var error = JSON.parse(this.response).error; 
-                alert(error.message); 
-            } 
-        } 
-    }; 
-    req.send(); 
-}
 </script>
-
 </body>
 </html>
