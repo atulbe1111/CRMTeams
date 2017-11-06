@@ -10,6 +10,17 @@
 <script type="text/javascript">  
 
 microsoftTeams.initialize();
+function authSuccessHandler(results)
+  {
+    console.log(results);
+  }
+  
+  var authParams = {
+    url: "https://login.microsoftonline.com",
+    successCallback: authSuccessHandler
+  };
+microsoftTeams.authentication.authenticate(authParams);
+  
 microsoftTeams.settings.registerOnSaveHandler(function(saveEvent){
 
     var radios = document.getElementsByName("maptype");
